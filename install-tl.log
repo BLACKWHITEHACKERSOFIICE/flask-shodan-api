@@ -1,0 +1,10 @@
+TeX Live installer invocation: /data/data/com.termux/files/usr/opt/texlive/install-tl/install-tl -custom-bin /data/data/com.termux/files/usr/bin/texlive -init-from-profile /data/data/com.termux/files/usr/opt/texlive/termux.profile 
+Trying to verify cryptographic signatures!
+Loading https://mirror.unpad.ac.id/ctan/systems/texlive/tlnet/tlpkg/texlive.tlpdb
+Installing TeX Live 2025 from: https://mirror.unpad.ac.id/ctan/systems/texlive/tlnet (verified)
+Platform: armel-linux => 'GNU/Linux on ARM'
+Distribution: net  (downloading)
+Using URL: https://mirror.unpad.ac.id/ctan/systems/texlive/tlnet
+Directory for temporary files: /data/data/com.termux/files/usr/tmp/JRczSkKQhc
+Installer revision: 74223
+Database revision: 77473

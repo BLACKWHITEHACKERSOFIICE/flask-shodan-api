@@ -1,0 +1,1 @@
+echo "status=ok" > CodingBot/metrics/health.txt
