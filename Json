@@ -1,0 +1,11 @@
+{
+  "query": "nginx",
+  "total": 123456,
+  "matches": [
+    {
+      "ip": "1.2.3.4",
+      "port": 80,
+      "org": "Cloudflare"
+    }
+  ]
+}
