@@ -1,0 +1,4 @@
+cat <<'EOF' > app.py   ← ❌ HAPUS BARIS INI
+import os
+from flask import Flask, request, jsonify
+import shodan

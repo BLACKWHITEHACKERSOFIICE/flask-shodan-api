@@ -1,0 +1,38 @@
+from flask import Flask, redirect, request
+import requests
+
+app = Flask(__name__)
+
+CLIENT_ID = "ISI_CLIENT_ID_KAMU"
+CLIENT_SECRET = "ISI_CLIENT_SECRET_KAMU"
+
+@app.route("/")
+def index():
+    return redirect(
+        f"https://github.com/login/oauth/authorize?client_id={CLIENT_ID}&scope=read:user"
+    )
+
+@app.route("/callback")
+def callback():
+    code = request.args.get("code")
+
+    r = requests.post(
+        "https://github.com/login/oauth/access_token",
+        headers={"Accept": "application/json"},
+        data={
+            "client_id": CLIENT_ID,
+            "client_secret": CLIENT_SECRET,
+            "code": code,
+        },
+    ).json()
+
+    token = r.get("access_token")
+
+    user = requests.get(
+        "https://api.github.com/user",
+        headers={"Authorization": f"Bearer {token}"}
+    ).json()
+
+    return f"<pre>{user}</pre>"
+
+app.run(host="127.0.0.1", port=8000)

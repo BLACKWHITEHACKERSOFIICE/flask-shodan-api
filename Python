@@ -1,0 +1,53 @@
+from flask import Flask, redirect, request
+import requests
+
+app = Flask(__name__)
+
+CLIENT_ID = "ISI_CLIENT_ID_KAMU"
+CLIENT_SECRET = "ISI_CLIENT_SECRET_KAMU"
+REDIRECT_URI = "http://localhost:8000/callback"
+
+@app.route("/")
+def login():
+    github_auth_url = (
+        "https://github.com/login/oauth/authorize"
+        f"?client_id={CLIENT_ID}"
+        f"&redirect_uri={REDIRECT_URI}"
+        f"&scope=read:user"
+    )
+    return redirect(github_auth_url)
+
+@app.route("/callback")
+def callback():
+    code = request.args.get("code")
+    if not code:
+        return "Login gagal: code tidak ditemukan", 400
+
+    token_resp = requests.post(
+        "https://github.com/login/oauth/access_token",
+        headers={"Accept": "application/json"},
+        data={
+            "client_id": CLIENT_ID,
+            "client_secret": CLIENT_SECRET,
+            "code": code,
+            "redirect_uri": REDIRECT_URI
+        },
+    ).json()
+
+    if "access_token" not in token_resp:
+        return f"Token error: {token_resp}", 400
+
+    token = token_resp["access_token"]
+
+    user = requests.get(
+        "https://api.github.com/user",
+        headers={
+            "Authorization": f"token {token}",
+            "Accept": "application/json"
+        }
+    ).json()
+
+    return f"<pre>{user}</pre>"
+
+if __name__ == "__main__":
+    app.run(port=8000, debug=True)
