@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Shodan Search Dashboard</title>
+    <style>
+        body { font-family: Arial; background:#0f172a; color:#e5e7eb; padding:30px }
+        input, button { padding:10px; font-size:16px }
+        button { background:#22c55e; border:none; cursor:pointer }
+        pre { background:#020617; padding:15px; overflow:auto }
+    </style>
+</head>
+<body>
+
+<h1>🔍 Shodan Search</h1>
+
+<input id="query" placeholder="nginx, apache, ssh..." />
+<button onclick="search()">Search</button>
+
+<h3>Result:</h3>
+<pre id="result">Waiting...</pre>
+
+<script>
+function search() {
+    let q = document.getElementById("query").value;
+    document.getElementById("result").innerText = "Loading...";
+
+    fetch("/search?q=" + q)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("result").innerText =
+                JSON.stringify(data, null, 2);
+        })
+        .catch(err => {
+            document.getElementById("result").innerText = err;
+        });
+}
+</script>
+
+</body>
+</html>
